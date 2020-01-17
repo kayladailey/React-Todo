@@ -41,7 +41,7 @@ class App extends React.Component {
           value={this.state.todo}
           handleChange={this.changeTodo}
           handleAddTodo={this.addTodo}
-         // handleClearTodos={this.clearCompletedTodos}
+         handleClearTodos={this.clearCompletedTodos}
         />
        
       </div>

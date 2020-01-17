@@ -13,11 +13,16 @@ We're going to practice building a stateful class component with this project. E
 - Build a form with an input field and 2 buttons
 **onChange & onClick**
 onChange will handle the updates that occur within the input field.
-onClick will launch the function passed into it. In this case those functions are 'handleAddTodo' and 'handleClearTodos' what they do is stored in the app.js component. Note: these are destructured!!
+onClick will launch the function passed into it. In this case those functions are 'handleAddTodo' and 'handleClearTodos' what they do is stored in the app.js component. [Note: these are destructured!! Lines 14,15 = Lines 24,33 App.js]
 
 
 #### 2.) App.js
 This is the component that our state is stored in. Call  `constructor` & `super` and then pass in how we would like our state sestup here we are passing in an array of todos and an key value todo. I passed in 2 'test' todo items to the array and then left the value as an empty string to store our input data we will get from the form.
+**Functions**
+ addTodo - preventing default behavior, destructuring the new state to be represented by the variable newTodo. We then pass in the array new state and the current state by using the 'setState'  (?Line 29)
+ 
+
+ changeTodo 
 
 
 #### 3.) Todo.js
