@@ -1,52 +1,77 @@
 import React from 'react';
+import TodoList from './components/TodoComponents/TodoList';
 import TodoForm from './components/TodoComponents/TodoForm';
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      todos: [
-        {
-          task: 'Study TK',
-          id: 1528817077286,
-          completed: false
-        },
-        {
-          task: 'Meal Prep',
-          id: 1528817084358,
-          completed: false
-        }
-      ],
-      todo: ''
-    };
-  }
-  
-  addTodo = e => {
-    e.preventDefault();
-    const newTodo = { task: this.state.todo,  };
-    this.setState({ 
-      todos: [...this.state.todos, newTodo], 
-      todo: '' 
-    });
-  };
+	state = {
+		todos: []
+	};
 
-  changeTodo = e => this.setState({ [e.target.name]: e.target.value });
+	componentDidMount = () => {
+		const localToDos = JSON.parse(localStorage.getItem('todoList'));
 
+		this.setState({
+			todos: localToDos || []
+		});
+	};
 
-  render() {
-    return (
-      <div>
-   <h1>Mommy Madness!</h1>
-        <TodoForm
-          value={this.state.todo}
-          handleChange={this.changeTodo}
-          handleAddTodo={this.addTodo}
-         handleClearTodos={this.clearCompletedTodos}
-        />
-       
-      </div>
-    );
-  }
+	handleSubmit = (e, newTask) => {
+		e.preventDefault();
+
+		let taskShape = {
+			task: newTask,
+
+			id: Date.now(),
+
+			completed: false
+		};
+
+		const newTodoList = [ ...this.state.todos, taskShape ];
+
+		this.setState({
+			todos: newTodoList
+		});
+
+		localStorage.setItem('todoList', JSON.stringify(newTodoList));
+	};
+
+	toggleCompleted = (id) => {
+		const toDoById = this.state.todos.map((todo) => {
+			return todo.id === id ? { ...todo, completed: !todo.completed } : todo;
+		});
+
+		this.setState({
+			todos: toDoById
+		});
+
+		localStorage.setItem('todoList', JSON.stringify(toDoById));
+	};
+
+	clearCompleted = () => {
+		const completed = this.state.todos.filter((todo) => {
+			return todo.completed === false;
+		});
+
+		this.setState({
+			todos: completed
+		});
+
+		localStorage.setItem('todoList', JSON.stringify(completed));
+	};
+
+	render() {
+		if (!this.state.todos) return <h1>loading to dos... </h1>;
+
+		return (
+			<div>
+				<h2>Mommy Madness!</h2>
+
+				<TodoList todos={this.state.todos} toggleCompleted={this.toggleCompleted} />
+
+				<TodoForm handleSubmit={this.handleSubmit} clearCompleted={this.clearCompleted} />
+			</div>
+		);
+	}
 }
 
 export default App;
