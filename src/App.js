@@ -7,32 +7,19 @@ class App extends React.Component {
 		todos: []
 	};
 
-	componentDidMount = () => {
-		const localToDos = JSON.parse(localStorage.getItem('todoList'));
-
-		this.setState({
-			todos: localToDos || []
-		});
-	};
-
 	handleSubmit = (e, newTask) => {
 		e.preventDefault();
 
-		let taskShape = {
+		let todoCard = {
 			task: newTask,
-
 			id: Date.now(),
-
 			completed: false
 		};
 
-		const newTodoList = [ ...this.state.todos, taskShape ];
-
+		const newTodoList = [ ...this.state.todos, todoCard ];
 		this.setState({
 			todos: newTodoList
 		});
-
-		localStorage.setItem('todoList', JSON.stringify(newTodoList));
 	};
 
 	toggleCompleted = (id) => {
@@ -43,8 +30,6 @@ class App extends React.Component {
 		this.setState({
 			todos: toDoById
 		});
-
-		localStorage.setItem('todoList', JSON.stringify(toDoById));
 	};
 
 	clearCompleted = () => {
@@ -55,8 +40,6 @@ class App extends React.Component {
 		this.setState({
 			todos: completed
 		});
-
-		localStorage.setItem('todoList', JSON.stringify(completed));
 	};
 
 	render() {

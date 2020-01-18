@@ -7,9 +7,11 @@ class TodoList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-    searchInput: ""
+    search: ""
     };
   }
+
+
 
   render() {
     return (
@@ -18,7 +20,7 @@ class TodoList extends React.Component {
 
           {this.props.todos.map(
             todo =>
-            todo.task.includes(this.state.searchInput) && (
+            todo.task.includes(this.state.search) && (
          
          <Todo
                   todo={todo} 
